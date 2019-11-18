@@ -11,9 +11,9 @@ class MainPageLocators():
     ALERT_INFO = (By.CLASS_NAME, "alert-info")
 
 
-
-
 class LoginPageLocators():
-    LOGIN_LINK = (By.ID, "login_link")
     LOGIN_FORM = (By.ID, "login_form")
     REGISTRATION_FORM = (By.ID, "register_form")
+
+class BasePageLocators():
+    LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")

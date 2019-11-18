@@ -40,3 +40,38 @@ def test_guest_can_add_product_to_basket(browser, offer):
     page.press_button_add_to_basket()
     page.solve_quiz_and_get_code()
     page.check_add_to_basket()
+
+
+def test_guest_cant_see_success_message_after_adding_product_to_basket(browser):
+    page = MainPage(browser, link)
+    page.open()
+    page.should_be_add_to_basket_button()
+    page.press_button_add_to_basket()
+
+    page.guest_cant_see_success_message_after_adding_product_to_basket()
+
+
+def test_guest_cant_see_success_message(browser):
+    page = MainPage(browser, link)
+    page.open()
+    page.guest_cant_see_success_message_after_adding_product_to_basket()
+
+
+def test_message_disappeared_after_adding_product_to_basket(browser):
+    page = MainPage(browser, link)
+    page.open()
+    page.should_be_add_to_basket_button()
+    page.press_button_add_to_basket()
+    page.message_disappeared_after_adding_product_to_basket()
+
+def test_guest_should_see_login_link_on_product_page(browser):
+    link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
+    page = MainPage(browser, link)
+    page.open()
+    page.should_be_log_in_link()
+
+def test_guest_can_go_to_login_page_from_product_page (browser):
+    link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
+    page = MainPage(browser, link)
+    page.open()
+    page.go_to_log_in_page()

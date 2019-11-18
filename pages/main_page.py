@@ -31,3 +31,11 @@ class MainPage(BasePage):
         assert self.is_element_present(*MainPageLocators.ALERT_INFO), "Message about price is not presented"
         price_alert = alertinners[2].text
         assert price in price_alert, "the price doesn't match"
+
+    def guest_cant_see_success_message_after_adding_product_to_basket(self):
+        assert self.is_not_element_present(*MainPageLocators.ALERT_INER), \
+            "Success message is presented, but should not be"
+
+    def message_disappeared_after_adding_product_to_basket(self):
+        assert self.is_disappeared(*MainPageLocators.ALERT_INER), \
+            "Success message is presented, but should not be"
