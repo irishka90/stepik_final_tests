@@ -1,7 +1,6 @@
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import TimeoutException, NoAlertPresentException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
 from selenium.common.exceptions import NoSuchElementException
 import math
 
@@ -42,7 +41,7 @@ class BasePage():
 
     def is_not_element_present(self, how, what, timeout=4):
         try:
-            WebDriverWait(self.browser, timeout)\
+            WebDriverWait(self.browser, timeout) \
                 .until(EC.presence_of_element_located((how, what)))
         except TimeoutException:
             return True
@@ -61,3 +60,13 @@ class BasePage():
             alert.accept()
         except NoAlertPresentException:
             print("No second alert presented")
+
+    def should_be_view_the_basket_button(self):
+        assert self.is_element_present(*BasePageLocators.VIEW_THE_BASKET), "Button 'View the basket' is not presented"
+
+    def press_view_the_basket_button(self):
+        go_to_basket = self.browser.find_element(*BasePageLocators.VIEW_THE_BASKET)
+        go_to_basket.click()
+
+        #поиск товара
+        #смена языка
