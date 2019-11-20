@@ -15,9 +15,11 @@ def test_guest_can_add_product_to_basket(browser):
 
 
 @pytest.mark.parametrize('offer', ["?promo=offer0", "?promo=offer1", "?promo=offer2", "?promo=offer3", "?promo=offer4",
-                                   "?promo=offer5", "?promo=offer6", "?promo=offer7", "?promo=offer8", "?promo=offer9",
+                                   "?promo=offer5", "?promo=offer6",
+                                   pytest.param("?promo=offer7", marks=pytest.mark.xfail),
+                                   "?promo=offer8", "?promo=offer9",
                                    ])
-def test_guest_can_add_product_to_basket(browser, offer):
+def test_guest_can_add_product_to_basket_promo(browser, offer):
     page = ProductPage(browser, link + offer)
     page.open()
     page.should_be_add_to_basket_button()
@@ -32,13 +34,13 @@ def test_guest_cant_see_success_message_after_adding_product_to_basket(browser):
     page.should_be_add_to_basket_button()
     page.press_button_add_to_basket()
 
-    page.guest_cant_see_success_message_after_adding_product_to_basket()
+    page.cant_see_success_message_after_adding_product_to_basket()
 
 
 def test_guest_cant_see_success_message(browser):
     page = ProductPage(browser, link)
     page.open()
-    page.guest_cant_see_success_message_after_adding_product_to_basket()
+    page.cant_see_success_message_after_adding_product_to_basket()
 
 @pytest.mark.xfail
 def test_message_disappeared_after_adding_product_to_basket(browser):

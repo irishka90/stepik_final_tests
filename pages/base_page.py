@@ -47,6 +47,14 @@ class BasePage():
             return True
         return False
 
+    def is_element_present_with_wait(self, how, what, timeout=4):
+        try:
+            WebDriverWait(self.browser, timeout) \
+                .until(EC.presence_of_element_located((how, what)))
+        except TimeoutException:
+            return False
+        return True
+
     def solve_quiz_and_get_code(self):
         alert = self.browser.switch_to.alert
         x = alert.text.split(" ")[2]
@@ -68,5 +76,24 @@ class BasePage():
         go_to_basket = self.browser.find_element(*BasePageLocators.VIEW_THE_BASKET)
         go_to_basket.click()
 
-        #поиск товара
-        #смена языка
+    def should_be_authorized_user(self):
+        assert self.is_element_present(*BasePageLocators.USER_ICON), "User icon is not presented," \
+                                                                     " probably unauthorised user"
+
+    def search_product(self):
+        search_input = self.browser.find_element(*BasePageLocators.SEARCH)
+        search_input.send_keys("The shellcoder's handbook")
+        button_search = self.browser.find_element(*BasePageLocators.BUTTON_SEARCH)
+        button_search.click()
+        page_header = self.browser.find_element(*BasePageLocators.PAGE_HEADER).text
+        book_title = self.browser.find_element(*BasePageLocators.BOOK_TITLE).text
+        assert book_title in page_header, "The found product is not correct"
+
+        # поиск товара
+
+    def language_change(self):
+        language_choise = self.browser.find_element(*BasePageLocators.LANGUAGE)
+        language_choise.click()
+        # смена языка
+        button = self.browser.find_element(*BasePageLocators.BUTTON_SEARCH)
+        button.click()

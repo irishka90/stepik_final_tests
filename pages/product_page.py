@@ -16,14 +16,18 @@ class ProductPage(BasePage):
         price = block_desc.find_element(*ProductPageLocators.PRICE_PRODUCT).text
 
         alertinners = self.browser.find_elements(*ProductPageLocators.ALERT_INER)
-        title_alert = alertinners[0].text
-        assert title in title_alert, "the title doesn't match"
+        title_alert = alertinners[0].find_element(*ProductPageLocators.PRICE_STRONG).text
+        assert title == title_alert, "the title doesn't match"
 
         assert self.is_element_present(*ProductPageLocators.ALERT_INFO), "Message about price is not presented"
-        price_alert = alertinners[2].text
-        assert price in price_alert, "the price doesn't match"
+        price_alert = alertinners[2].find_element(*ProductPageLocators.PRICE_STRONG).text
+        assert price == price_alert, "the price doesn't match"
 
-    def guest_cant_see_success_message_after_adding_product_to_basket(self):
+    def can_see_success_message_after_adding_product_to_basket(self):
+        assert self.is_element_present(*ProductPageLocators.ALERT_INER), \
+            " No Success message, but should  be"
+
+    def cant_see_success_message_after_adding_product_to_basket(self):
         assert self.is_not_element_present(*ProductPageLocators.ALERT_INER), \
             "Success message is presented, but should not be"
 
