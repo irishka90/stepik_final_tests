@@ -1,3 +1,5 @@
+import time
+
 from selenium.common.exceptions import TimeoutException, NoAlertPresentException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -86,14 +88,21 @@ class BasePage():
         button_search = self.browser.find_element(*BasePageLocators.BUTTON_SEARCH)
         button_search.click()
         page_header = self.browser.find_element(*BasePageLocators.PAGE_HEADER).text
+        print(page_header)
         book_title = self.browser.find_element(*BasePageLocators.BOOK_TITLE).text
+        print(book_title)
+        time.sleep(3)
         assert book_title in page_header, "The found product is not correct"
 
         # поиск товара
 
     def language_change(self):
-        language_choise = self.browser.find_element(*BasePageLocators.LANGUAGE)
-        language_choise.click()
-        # смена языка
+        language_choose = self.browser.find_element(*BasePageLocators.LANGUAGE)
+        language_choose.click()
+        ru_lang_choose = language_choose.find_element(*BasePageLocators.RU_LANG)
+        ru_lang_choose.click()
+        time.sleep(3)
         button = self.browser.find_element(*BasePageLocators.BUTTON_SEARCH)
         button.click()
+        time.sleep(5)
+        # assert

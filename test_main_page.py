@@ -45,7 +45,9 @@ class TestUserAddToBasketFromProductPage():
         page.should_be_register_form()
         page.register_new_user(email=str(time.time()) + "@fakemail.org")
 
-    def test_can_add_product_to_basket(self, browser):
+
+    @pytest.mark.need_review
+    def test_user_can_add_product_to_basket(self, browser):
         product_page = ProductPage(browser, "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/")
         product_page.open()
         product_page.should_be_add_to_basket_button()
@@ -67,11 +69,16 @@ def test_search_product(browser):
     page.search_product()
 
 
+# ????????
 def test_language_change(browser):
     page = MainPage(browser, link)
     page.open()
     page.language_change()
 
+def test_return_to_main_page_from_prod_page(browser):
+    page = MainPage(browser, "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/")
+    page.open()
+    page.return_to_main_page()
 
 class TestBrowseStore():
     def test_all_products(self, browser):
@@ -79,3 +86,11 @@ class TestBrowseStore():
         page.open()
         page.should_be_browse_store()
         page.all_products()
+
+    def test_offers(self, browser):
+        page = MainPage(browser, link)
+        page.open()
+        page.should_be_browse_store()
+        page.offers()
+
+
